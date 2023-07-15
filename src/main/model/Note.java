@@ -20,6 +20,14 @@ public class Note {
         return selected;
     }
 
+    public void select() {
+        selected = true;
+    }
+
+    public void unselect() {
+        selected = false;
+    }
+
     // EFFECTS : returns the selected note message
     public String getMessage() {
         return message;

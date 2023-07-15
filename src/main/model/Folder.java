@@ -1,23 +1,31 @@
 package model;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 
 public class Folder {
 
     private boolean selected;
     private String title;
-    private HashSet<Note> notes;
+    private ArrayList<Note> notes;
 
     // EFFECTS : creates a new selected empty folder with the given name
-    public Folder(String name) {
+    public Folder() {
         selected = true;
-        this.title = name;
-        notes = new HashSet<>();
+        title = "";
+        notes = new ArrayList<>();
     }
 
     // EFFECTS : returns true if the folder is selected
     public boolean isSelected() {
         return selected;
+    }
+
+    public void select() {
+        selected = true;
+    }
+
+    public void unselect() {
+        selected = false;
     }
 
     // EFFECTS : returns the title of the folder
@@ -32,8 +40,8 @@ public class Folder {
     }
 
     // EFFECTS : if selected, lists all notes in the folder
-    public HashSet<String> viewNotes() {
-        HashSet<String> list = new HashSet<>();
+    public ArrayList<String> viewNotes() {
+        ArrayList<String> list = new ArrayList<>();
         for (Note note: notes) {
             list.add(note.getNoteTitle());
         }

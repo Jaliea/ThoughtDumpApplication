@@ -3,7 +3,7 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,12 +11,12 @@ public class FolderTest {
     private Folder testFolder;
 
     @BeforeEach
-    void runBefore() {testFolder = new Folder("test");}
+    void runBefore() {testFolder = new Folder();}
 
    @Test
    void testConstructor() {
         assertTrue(testFolder.isSelected());
-        assertEquals("test", testFolder.getFolderTitle());
+        assertEquals("", testFolder.getFolderTitle());
    }
 
     @Test
@@ -33,9 +33,9 @@ public class FolderTest {
         Note note2 = new Note();
         note2.renameTitle("two");
         note2.addToFolder(testFolder);
-        HashSet<String> actualNotes = testFolder.viewNotes();
+        ArrayList<String> actualNotes = testFolder.viewNotes();
 
-        HashSet<String> expectedNotes = new HashSet<>();
+        ArrayList<String> expectedNotes = new ArrayList<>();
         expectedNotes.add("one");
         expectedNotes.add("two");
 

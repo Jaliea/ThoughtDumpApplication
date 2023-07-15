@@ -27,7 +27,7 @@ class NoteTest {
 
     @Test
     void testAddToFolder() {
-        Folder testFolder = new Folder("Test");
+        Folder testFolder = new Folder();
         testNote.addToFolder(testFolder);
         assertEquals(testFolder, testNote.getFolder());
     }
