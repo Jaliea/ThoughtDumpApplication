@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FolderTest {
     private Folder testFolder;
@@ -33,11 +34,12 @@ public class FolderTest {
         Note note2 = new Note();
         note2.renameTitle("two");
         note2.addToFolder(testFolder);
-        ArrayList<String> actualNotes = testFolder.viewNotes();
 
-        ArrayList<String> expectedNotes = new ArrayList<>();
-        expectedNotes.add("one");
-        expectedNotes.add("two");
+        ArrayList<Note> actualNotes = testFolder.viewNotes();
+
+        ArrayList<Note> expectedNotes = new ArrayList<>();
+        expectedNotes.add(note1);
+        expectedNotes.add(note2);
 
         assertEquals(expectedNotes, actualNotes);
     }

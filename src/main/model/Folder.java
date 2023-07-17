@@ -40,12 +40,13 @@ public class Folder {
     }
 
     // EFFECTS : if selected, lists all notes in the folder
-    public ArrayList<String> viewNotes() {
-        ArrayList<String> list = new ArrayList<>();
-        for (Note note: notes) {
-            list.add(note.getNoteTitle());
-        }
-        return list;
+    public ArrayList<Note> viewNotes() {
+        return notes;
+//        ArrayList<String> list = new ArrayList<>();
+//        for (Note note: notes) {
+//            list.add(note.getNoteTitle());
+//        }
+//        return list;
     }
 
     // MODIFIES : this

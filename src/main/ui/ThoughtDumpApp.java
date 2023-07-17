@@ -80,6 +80,7 @@ public class ThoughtDumpApp {
     // EFFECTS: creates a new note with user's thoughts and given title
     private void createNote() {
         note = new Note();
+        note.select();
         System.out.println("dump your thoughts");
         note.write(input.next());
         System.out.println("name your thoughts");
@@ -120,13 +121,14 @@ public class ThoughtDumpApp {
         if (folders.isEmpty()) {
             System.out.println("you have no folders yet !");
             createFolder();
+        } else {
+            for (Folder folders: folders) {
+                System.out.println("\t" + number + "-> " + folders.getFolderTitle());
+                number++;
+            }
+            System.out.println("\t" + number + " -> create a new folder");
+            selectFolderMenu(number);
         }
-        for (Folder folders: folders) {
-            System.out.println("\t" + number + "-> " + folders.getFolderTitle());
-            number++;
-        }
-        System.out.println("\t" + number + " -> create a new folder");
-        selectFolderMenu(number);
     }
 
     private void selectFolderMenu(int number) {
@@ -139,8 +141,10 @@ public class ThoughtDumpApp {
             if (note.isSelected()) {
                 selectedFolder.addNote(note);
                 note.unselect();
-            }
+            } //else {
             openFolder(selectedFolder);
+           // }
+
         }
     }
 
@@ -151,12 +155,32 @@ public class ThoughtDumpApp {
         System.out.println("\n give your new folder a name");
         folder.name(input.next());
         folders.add(folder);
-        viewFolders();
     }
 
     private void openFolder(Folder folder) {
-        System.out.println("\n" + folder.getFolderTitle());
-        System.out.println(folder.viewNotes());
+        System.out.println("\nfolder opened : " + folder.getFolderTitle());
+        ArrayList<Note> listOfNotes = folder.viewNotes();
+        int number = 1;
+        if (listOfNotes.isEmpty()) {
+            System.out.println("you have no notes yet !");
+            createNote();
+        } else if (!note.isSelected()) {
+            System.out.println("\nselect the note you want to open:");
+            for (Note note : listOfNotes) {
+                System.out.println("\t" + number + " -> " + note.getNoteTitle());
+                number++;
+            }
+            openNote(folder);
+        }
+    }
+
+    private void openNote(Folder folder) {
+        String command = input.next();
+        int numberCommand = Integer.parseInt(command) - 1;
+        ArrayList<Note> listOfNotes = folder.viewNotes();
+        note = listOfNotes.get(numberCommand);
+        System.out.println("\nnote title : " + note.getNoteTitle());
+        System.out.println("note message : " + note.getMessage());
     }
 }
 
