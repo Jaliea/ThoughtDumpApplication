@@ -21,7 +21,7 @@ public class FolderTest {
 
     @Test
     void testRename() {
-        testFolder.rename("new title");
+        testFolder.name("new title");
         assertEquals("new title", testFolder.getFolderTitle());
     }
 

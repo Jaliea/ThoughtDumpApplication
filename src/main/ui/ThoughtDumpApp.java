@@ -24,6 +24,7 @@ public class ThoughtDumpApp {
         String command;
 
         init();
+        welcome();
 
         while (keepGoing) {
             displayMenu();
@@ -49,16 +50,15 @@ public class ThoughtDumpApp {
         input.useDelimiter("\n");
     }
 
-    // EFFECTS: adds a folder to list of folders for account
-    private void addFolder() {
-        folders.add(new Folder());
+    private void welcome() {
+        System.out.println("\nhihi :]");
+        System.out.println("welcome to ThoughtDump !");
+        System.out.println("a cozy and safe space where you can dump all your thoughts");
     }
 
     // EFFECTS: displays menu of options to user
     private void displayMenu() {
-        System.out.println("\nhihi :]");
-        System.out.println("welcome to ThoughtDump !");
-        System.out.println("a cozy and safe space where you can dump all your thoughts");
+        System.out.println("\nmenu");
         System.out.println("\nselect from:");
         System.out.println("\t1 -> create new note");
         System.out.println("\t2 -> view folders");
@@ -136,6 +136,10 @@ public class ThoughtDumpApp {
             createFolder();
         } else {
             Folder selectedFolder = folders.get(numberCommand);
+            if (note.isSelected()) {
+                selectedFolder.addNote(note);
+                note.unselect();
+            }
             openFolder(selectedFolder);
         }
     }
@@ -145,7 +149,7 @@ public class ThoughtDumpApp {
         System.out.println("create a new folder !");
         Folder folder = new Folder();
         System.out.println("\n give your new folder a name");
-        folder.rename(input.next());
+        folder.name(input.next());
         folders.add(folder);
         viewFolders();
     }

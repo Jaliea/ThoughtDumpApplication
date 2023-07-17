@@ -35,7 +35,7 @@ public class Folder {
 
     // MODIFIES : this
     // EFFECTS : if selected, renames the folder
-    public void rename(String newName) {
+    public void name(String newName) {
         this.title = newName;
     }
 
