@@ -48,6 +48,8 @@ public class ThoughtDumpApp {
         folders = new ArrayList<>();
         input = new Scanner(System.in);
         input.useDelimiter("\n");
+        note = new Note();
+        note.unselect();
     }
 
     private void welcome() {
@@ -102,6 +104,7 @@ public class ThoughtDumpApp {
             saveNoteMenu();
         } else if (command.equals("2")) {
             note.trash();
+            note.unselect();
         } else {
             System.out.println("selection not valid... try again");
             selectNoteMenu();
@@ -111,6 +114,7 @@ public class ThoughtDumpApp {
     // EFFECTS : displays menu for user to save thought
     private void saveNoteMenu() {
         viewFolders();
+        note.unselect();
         System.out.println("note saved !");
     }
 
@@ -122,7 +126,7 @@ public class ThoughtDumpApp {
             System.out.println("you have no folders yet !");
             createFolder();
         } else {
-            for (Folder folders: folders) {
+            for (Folder folders : folders) {
                 System.out.println("\t" + number + "-> " + folders.getFolderTitle());
                 number++;
             }
@@ -140,11 +144,9 @@ public class ThoughtDumpApp {
             Folder selectedFolder = folders.get(numberCommand);
             if (note.isSelected()) {
                 selectedFolder.addNote(note);
-                note.unselect();
-            } //else {
-            openFolder(selectedFolder);
-           // }
-
+            } else {
+                openFolder(selectedFolder);
+            }
         }
     }
 
@@ -155,6 +157,10 @@ public class ThoughtDumpApp {
         System.out.println("\n give your new folder a name");
         folder.name(input.next());
         folders.add(folder);
+        if (note.isSelected()) {
+            folder.addNote(note);
+            note.unselect();
+        }
     }
 
     private void openFolder(Folder folder) {
@@ -173,6 +179,8 @@ public class ThoughtDumpApp {
             openNote(folder);
         }
     }
+
+
 
     private void openNote(Folder folder) {
         String command = input.next();
