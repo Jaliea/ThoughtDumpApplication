@@ -2,30 +2,16 @@ package model;
 
 import java.util.ArrayList;
 
+// Represents a folder with a title and full of notes
 public class Folder {
 
-    private boolean selected;
     private String title;
     private ArrayList<Note> notes;
 
     // EFFECTS : creates a new selected empty folder with the given name
     public Folder() {
-        selected = true;
         title = "";
         notes = new ArrayList<>();
-    }
-
-    // EFFECTS : returns true if the folder is selected
-    public boolean isSelected() {
-        return selected;
-    }
-
-    public void select() {
-        selected = true;
-    }
-
-    public void unselect() {
-        selected = false;
     }
 
     // EFFECTS : returns the title of the folder
@@ -42,17 +28,15 @@ public class Folder {
     // EFFECTS : if selected, lists all notes in the folder
     public ArrayList<Note> viewNotes() {
         return notes;
-//        ArrayList<String> list = new ArrayList<>();
-//        for (Note note: notes) {
-//            list.add(note.getNoteTitle());
-//        }
-//        return list;
     }
 
     // MODIFIES : this
     // EFFECTS : adds the given note to the list of notes in folder
     public void addNote(Note note) {
-        notes.add(note);
+        if (note.isSelected()) {
+            notes.add(note);
+            note.unselect();
+        }
     }
 
 

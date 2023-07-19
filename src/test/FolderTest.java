@@ -1,5 +1,5 @@
-package model;
-
+import model.Folder;
+import model.Note;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,8 +16,9 @@ public class FolderTest {
 
    @Test
    void testConstructor() {
-        assertTrue(testFolder.isSelected());
         assertEquals("", testFolder.getFolderTitle());
+        ArrayList<Note> actualNotes = testFolder.viewNotes();
+        assertEquals(0, actualNotes.size());
    }
 
     @Test
@@ -42,5 +43,17 @@ public class FolderTest {
         expectedNotes.add(note2);
 
         assertEquals(expectedNotes, actualNotes);
+    }
+
+    @Test
+    void testAddUnselectedNote() {
+        Note note1 = new Note();
+        note1.unselect();
+        testFolder.addNote(note1);
+
+        ArrayList<Note> actualNotes = testFolder.viewNotes();
+        ArrayList<Note> expectedNotes = new ArrayList<>();
+        assertEquals(expectedNotes, actualNotes);
+        assertEquals(0, actualNotes.size());
     }
 }

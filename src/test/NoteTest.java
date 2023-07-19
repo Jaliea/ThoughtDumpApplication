@@ -1,5 +1,5 @@
-package model;
-
+import model.Folder;
+import model.Note;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -54,5 +54,14 @@ class NoteTest {
     void testRenameTitle() {
         testNote.renameTitle("heh");
         assertEquals("heh", testNote.getNoteTitle());
+    }
+
+    @Test
+    void testSelect() {
+        testNote.unselect();
+        assertFalse(testNote.isSelected());
+
+        testNote.select();
+        assertTrue(testNote.isSelected());
     }
 }

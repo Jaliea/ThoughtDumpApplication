@@ -1,5 +1,6 @@
 package model;
 
+// Represents a note with a title and message, and can be either selected or unselected to move into a folder
 public class Note {
 
     private boolean selected;
@@ -20,10 +21,12 @@ public class Note {
         return selected;
     }
 
+    // EFFECTS : sets note as selected
     public void select() {
         selected = true;
     }
 
+    // EFFECTS : sets note as unselected
     public void unselect() {
         selected = false;
     }
@@ -33,6 +36,7 @@ public class Note {
         return message;
     }
 
+    // EFFECTS : returns note title
     public String getNoteTitle() {
         return title;
     }

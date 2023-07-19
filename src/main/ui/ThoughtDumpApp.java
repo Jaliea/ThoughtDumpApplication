@@ -157,10 +157,7 @@ public class ThoughtDumpApp {
         System.out.println("\n give your new folder a name");
         folder.name(input.next());
         folders.add(folder);
-        if (note.isSelected()) {
-            folder.addNote(note);
-            note.unselect();
-        }
+        folder.addNote(note);
     }
 
     private void openFolder(Folder folder) {
