@@ -26,7 +26,10 @@ to write down all my thoughts, and it feels a little weird having an email solel
 
 ## User Stories
 - As a user, I want to be able to write down a note and throw it away
-- As a user, I want to be able to write down a note and associate it with an emoji
 - As a user, I want to be able to write down a note and save it to a folder
 - As a user, I want to be able to create folders
 - As a user, I want to be able to look at all my notes in my folders
+- As a user, I want to be able to write down a note and associate it with an emoji
+- As a user, when I select the quit option from the application menu, I want to be reminded that I have the option to 
+save my recent changes to file. 
+- As a user, when I start the application, I want to be given the option to load my notes and folders from file.

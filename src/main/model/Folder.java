@@ -14,22 +14,23 @@ public class Folder {
         notes = new ArrayList<>();
     }
 
-    // EFFECTS : returns the title of the folder
+    // GETTERS
     public String getFolderTitle() {
         return title;
     }
 
     // MODIFIES : this
-    // EFFECTS : if selected, renames the folder
+    // EFFECTS : renames the folder
     public void name(String newName) {
         this.title = newName;
     }
 
-    // EFFECTS : if selected, lists all notes in the folder
+    // EFFECTS : lists all notes in the folder
     public ArrayList<Note> viewNotes() {
         return notes;
     }
 
+    // REQUIRES : note is selected
     // MODIFIES : this
     // EFFECTS : adds the given note to the list of notes in folder
     public void addNote(Note note) {

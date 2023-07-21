@@ -16,43 +16,40 @@ public class Note {
         folder = null;
     }
 
-    // EFFECTS : returns true if the note is selected
-    public boolean isSelected() {
-        return selected;
-    }
-
-    // EFFECTS : sets note as selected
+    // SETTERS
     public void select() {
         selected = true;
     }
 
-    // EFFECTS : sets note as unselected
     public void unselect() {
         selected = false;
     }
 
-    // EFFECTS : returns the selected note message
+    // GETTERS
+    public boolean isSelected() {
+        return selected;
+    }
+
     public String getMessage() {
         return message;
     }
 
-    // EFFECTS : returns note title
     public String getNoteTitle() {
         return title;
     }
 
-    // EFFECTS : returns the folder that the selected note is assigned to
     public Folder getFolder() {
         return folder;
     }
 
-
+    // REQUIRES : selected note
     // MODIFIES : this
     // EFFECTS : writes a message on note
     public void write(String message) {
         this.message = message;
     }
 
+    // REQUIRES : selected note
     // MODIFIES : this
     // EFFECTS : adds the note to the selected folder
     public void addToFolder(Folder folder) {
@@ -60,23 +57,27 @@ public class Note {
         folder.addNote(this);
     }
 
+    // REQUIRES : selected note
     // MODIFIES : this
     // EFFECTS : puts the selected note into the trash
     public Object trash() {
         return null;
     }
 
+    // REQUIRES : selected note
     // EFFECTS : returns the message of the selected note
     public String view() {
         return message;
     }
 
+    // REQUIRES : selected note
     // MODIFIES : this
     // EFFECTS : edits the message of the note to the new message
     public void edit(String newMessage) {
         this.message = newMessage;
     }
 
+    // REQUIRES : selected note
     // MODIFIES : this
     // EFFECTS : renames current title to new title
     public void renameTitle(String newTitle) {

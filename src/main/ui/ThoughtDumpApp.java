@@ -6,6 +6,7 @@ import model.Note;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+// creates a new Thought Dump application window
 public class ThoughtDumpApp {
     private Note note;
     private ArrayList<Folder> folders;
@@ -52,6 +53,7 @@ public class ThoughtDumpApp {
         note.unselect();
     }
 
+    // EFFECTS: displays welcome message when application is first launched
     private void welcome() {
         System.out.println("\nhihi :]");
         System.out.println("welcome to ThoughtDump !");
@@ -79,6 +81,7 @@ public class ThoughtDumpApp {
         }
     }
 
+    // MODIFIES: this
     // EFFECTS: creates a new note with user's thoughts and given title
     private void createNote() {
         note = new Note();
@@ -98,6 +101,9 @@ public class ThoughtDumpApp {
         System.out.println("\t2 -> dump your thoughts");
     }
 
+    // MODIFIES: this
+    // EFFECTS: goes to the correct processes to either save or dump the thought
+    //         based on the user input, if the user input is invalid, it loops
     private void selectNoteMenu() {
         String command = input.next();
         if (command.equals("1")) {
@@ -111,6 +117,7 @@ public class ThoughtDumpApp {
         }
     }
 
+    // MODIFIES: this
     // EFFECTS : displays menu for user to save thought
     private void saveNoteMenu() {
         viewFolders();
@@ -118,6 +125,7 @@ public class ThoughtDumpApp {
         System.out.println("note saved !");
     }
 
+    // MODIFIES: this
     // EFFECTS : view the user's folders
     private void viewFolders() {
         System.out.println("\nselect the folder you want to open:");
@@ -135,6 +143,10 @@ public class ThoughtDumpApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: if the user doesn't have a folder, it goes to the create a folder menu
+    //          else, if there is a note selected, it is saved to the folder that the user chooses
+    //          else, it opens the chosen folder
     private void selectFolderMenu(int number) {
         String command = input.next();
         int numberCommand = Integer.parseInt(command) - 1;
@@ -150,6 +162,7 @@ public class ThoughtDumpApp {
         }
     }
 
+    // MODIFIES: this
     // EFFECTS: create a new folder based on user input
     private void createFolder() {
         System.out.println("create a new folder !");
@@ -160,6 +173,9 @@ public class ThoughtDumpApp {
         folder.addNote(note);
     }
 
+    // MODIFIES: this
+    // EFFECTS: prints a list of notes in the given folder, giving the user the option to
+    //          open any of them
     private void openFolder(Folder folder) {
         System.out.println("\nfolder opened : " + folder.getFolderTitle());
         ArrayList<Note> listOfNotes = folder.viewNotes();
@@ -177,8 +193,8 @@ public class ThoughtDumpApp {
         }
     }
 
-
-
+    // MODIFIES: this
+    //EFFECTS : prints the note title and message
     private void openNote(Folder folder) {
         String command = input.next();
         int numberCommand = Integer.parseInt(command) - 1;
