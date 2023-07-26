@@ -1,11 +1,10 @@
 package model;
 
-import model.Folder;
-import model.Note;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -13,14 +12,16 @@ public class FolderTest {
     private Folder testFolder;
 
     @BeforeEach
-    void runBefore() {testFolder = new Folder("test folder");}
+    void runBefore() {
+        testFolder = new Folder("test folder");
+    }
 
-   @Test
-   void testConstructor() {
+    @Test
+    void testConstructor() {
         assertEquals("test folder", testFolder.getFolderTitle());
         ArrayList<Note> actualNotes = testFolder.viewNotes();
         assertEquals(0, actualNotes.size());
-   }
+    }
 
     @Test
     void testRename() {
@@ -56,5 +57,26 @@ public class FolderTest {
         ArrayList<Note> expectedNotes = new ArrayList<>();
         assertEquals(expectedNotes, actualNotes);
         assertEquals(0, actualNotes.size());
+    }
+
+    @Test
+    void testViewNoteTitles() {
+        Note note1 = new Note();
+        note1.renameTitle("one");
+        note1.addToFolder(testFolder);
+        Note note2 = new Note();
+        note2.renameTitle("two");
+        note2.addToFolder(testFolder);
+
+        List<String> actual = testFolder.noteNames();
+
+        List<String> expected = new ArrayList<>();
+        expected.add("one");
+        expected.add("two");
+
+        assertEquals(expected, actual);
+
+        assertEquals(note1, testFolder.findNote("one"));
+
     }
 }

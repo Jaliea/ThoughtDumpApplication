@@ -3,23 +3,32 @@ package ui;
 import model.Folder;
 import model.Note;
 import model.User;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 // creates a new Thought Dump application window
 public class ThoughtDumpApp {
-    private static final String JSON_STORAGE = "./data/user1.json";
+    private static final String JSON_USER1_STORAGE = "./data/user1.json";
 
     private Note note;
     private ArrayList<Folder> folders;
     private Scanner input;
     boolean keepGoing;
     private User user;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
+    // MODIFIES: this
     // EFFECTS : runs the ThoughtDump application
     public ThoughtDumpApp() {
         user = new User("current user");
+        jsonWriter = new JsonWriter(JSON_USER1_STORAGE);
+        jsonReader = new JsonReader(JSON_USER1_STORAGE);
         runThoughtDump();
     }
 
@@ -33,6 +42,7 @@ public class ThoughtDumpApp {
 
         init();
         welcome();
+        processLoadCommand(input.next());
 
         while (keepGoing) {
             mainMenu();
@@ -67,22 +77,34 @@ public class ThoughtDumpApp {
         System.out.println("\nhihi :]");
         System.out.println("welcome to ThoughtDump !");
         System.out.println("a cozy and safe space where you can dump all your thoughts");
-        System.out.println("\n do you want to load a previous save file?");
-        System.out.println("\t 1 -> yes");
-        System.out.println("\t 2 -> no");
+        System.out.println("\ndo you want to load a previous save file?");
+        System.out.println("\t1 -> yes");
+        System.out.println("\t2 -> no");
     }
-    // TODO last
+
     // MODIFIES: this
     // EFFECTS: if user input is 1, then load a previous save file
     //          else nothing, skip entire process and continue with application
-    private void processLoadCommand() {
-        // stub
+    private void processLoadCommand(String command) {
+        if (command.equals("1")) {
+            loadSavedDumps();
+        } else if (!command.equals("2")) {
+            System.out.println("selection not valid... try again");
+        }
     }
-    // TODO
+
     // MODIFIES: this
     // EFFECTS: loads notes and folders from file
+    // the following code is taken and modified from the WorkRoomApp class in the JsonSerializationDemo project:
+    // https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo/blob/master/src/main/ui/WorkRoomApp.java
     private void loadSavedDumps() {
-        // stub
+        try {
+            user = jsonReader.read();
+            System.out.println(user.getName() + " : loaded from " + JSON_USER1_STORAGE);
+            folders = (ArrayList<Folder>) user.getFolders();
+        } catch (IOException e) {
+            System.out.println("unable to read from file " + JSON_USER1_STORAGE);
+        }
     }
 
     // EFFECTS: displays menu of options to user
@@ -99,17 +121,22 @@ public class ThoughtDumpApp {
 
     // MODIFIES: this
     // EFFECTS: processes user command
-    // the following code is taken from the TellerApp class in the TellerApp project:
+    // the following code is taken and modified from the TellerApp class in the TellerApp project:
     // https://github.students.cs.ubc.ca/CPSC210/TellerApp/blob/main/src/main/ca/ubc/cpsc210/bank/ui/TellerApp.java
     private void processCommand(String command) {
-        if (command.equals("1")) {
-            createNote();
-        } else if (command.equals("2")) {
-            viewFolders();
-        } else if (command.equals("3")) {
-            saveSavedDumps();
-        } else {
-            System.out.println("selection not valid... try again");
+        switch (command) {
+            case "1":
+                createNote();
+                break;
+            case "2":
+                viewFolders();
+                break;
+            case "3":
+                saveSavedDumps();
+                break;
+            default:
+                System.out.println("selection not valid... try again");
+                break;
         }
     }
 
@@ -235,9 +262,20 @@ public class ThoughtDumpApp {
         System.out.println("note message : " + note.getMessage());
     }
 
-    // MODIFIES: this + json TODO - change and finish
+    // MODIFIES: this + json
     // EFFECTS : saves the recent notes and folders to file
+    // the following code is taken and modified from the WorkRoomApp class in the JsonSerializationDemo project:
+    // https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo/blob/master/src/main/ui/WorkRoomApp.java
     private void saveSavedDumps() {
+        try {
+            user.addFolders(folders);
+            jsonWriter.open();
+            jsonWriter.write(user);
+            jsonWriter.close();
+            System.out.println("\nrecent changes saved to " + JSON_USER1_STORAGE);
+        } catch (FileNotFoundException e) {
+            System.out.println("unable to save to file " + JSON_USER1_STORAGE);
+        }
 
     }
 }

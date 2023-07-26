@@ -1,0 +1,19 @@
+{
+    "folders": [
+        {
+            "folder": "folder1",
+            "notes": [{
+                "title": "note1",
+                "message": "hello"
+            }]
+        },
+        {
+            "folder": "folder2",
+            "notes": [{
+                "title": "im sleepy",
+                "message": "bruh"
+            }]
+        }
+    ],
+    "name": "test user"
+}

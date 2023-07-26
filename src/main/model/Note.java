@@ -1,7 +1,11 @@
 package model;
 
+import org.json.JSONObject;
+
+import persistence.Writable;
+
 // Represents a note with a title and message, and can be either selected or unselected to move into a folder
-public class Note {
+public class Note implements Writable {
 
     private boolean selected;
     private String title;
@@ -82,5 +86,13 @@ public class Note {
     // EFFECTS : renames current title to new title
     public void renameTitle(String newTitle) {
         this.title = newTitle;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("title", title);
+        json.put("message", message);
+        return json;
     }
 }

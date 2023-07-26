@@ -6,7 +6,9 @@ import org.json.JSONObject;
 
 import java.io.*;
 
-// Represents a writer that writes JSON representation of notes and folders to file
+// writes JSON representation of the user with notes and folders to file
+// the following code is taken and modified from the JsonWriter class from the JsonSerializationDemo project:
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo/blob/master/src/main/persistence/JsonWriter.java
 public class JsonWriter {
     private static final int TAB = 4; // indent
     private PrintWriter writer;

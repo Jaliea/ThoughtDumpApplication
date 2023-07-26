@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 // Represents a folder with a title and full of notes
 public class Folder implements Writable {
@@ -23,6 +24,10 @@ public class Folder implements Writable {
         return title;
     }
 
+    public int getNumNotes() {
+        return notes.size();
+    }
+
     // MODIFIES : this
     // EFFECTS : renames the folder
     public void rename(String newName) {
@@ -32,6 +37,22 @@ public class Folder implements Writable {
     // EFFECTS : lists all notes in the folder
     public ArrayList<Note> viewNotes() {
         return notes;
+    }
+
+    // EFFECTS : returns a list of the user's note titles
+    public List<String> noteNames() {
+        List<String> nameList = new ArrayList<>();
+        for (Note singleNote : notes) {
+            nameList.add(singleNote.getNoteTitle());
+        }
+        return nameList;
+    }
+
+    // EFFECTS : finds the note with the given title
+    public Note findNote(String noteTitle) {
+        List<String> nameList = noteNames();
+        int index = nameList.indexOf(noteTitle);
+        return notes.get(index);
     }
 
     // REQUIRES : note is selected
@@ -52,6 +73,8 @@ public class Folder implements Writable {
         return json;
     }
 
+    // MODIFIES: json file
+    // EFFECTS: returns user's notes in folder as a JSON array
     private JSONArray notesToJson() {
         JSONArray jsonArray = new JSONArray();
 

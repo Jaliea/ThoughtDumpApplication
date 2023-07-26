@@ -16,6 +16,7 @@ public class User implements Writable {
         myFolders = new ArrayList<>();
     }
 
+    // GETTERS
     public String getName() {
         return name;
     }
@@ -65,7 +66,6 @@ public class User implements Writable {
         List<String> nameList = folderNames();
         int index = nameList.indexOf(folderName);
         return myFolders.get(index);
-        // TODO : EXCEPTION WHERE THE FOLDER NAME ISNT FOUND
     }
 
     // MODIFIES : this
@@ -83,6 +83,8 @@ public class User implements Writable {
         return json;
     }
 
+    // MODIFIES: json file
+    // EFFECTS: returns user's folders as a JSON array
     private JSONArray foldersToJson() {
         JSONArray jsonArray = new JSONArray();
 
