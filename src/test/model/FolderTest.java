@@ -1,3 +1,5 @@
+package model;
+
 import model.Folder;
 import model.Note;
 import org.junit.jupiter.api.BeforeEach;
@@ -5,25 +7,24 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FolderTest {
     private Folder testFolder;
 
     @BeforeEach
-    void runBefore() {testFolder = new Folder();}
+    void runBefore() {testFolder = new Folder("test folder");}
 
    @Test
    void testConstructor() {
-        assertEquals("", testFolder.getFolderTitle());
+        assertEquals("test folder", testFolder.getFolderTitle());
         ArrayList<Note> actualNotes = testFolder.viewNotes();
         assertEquals(0, actualNotes.size());
    }
 
     @Test
     void testRename() {
-        testFolder.name("new title");
+        testFolder.rename("new title");
         assertEquals("new title", testFolder.getFolderTitle());
     }
 

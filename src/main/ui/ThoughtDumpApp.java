@@ -2,24 +2,31 @@ package ui;
 
 import model.Folder;
 import model.Note;
+import model.User;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 // creates a new Thought Dump application window
 public class ThoughtDumpApp {
+    private static final String JSON_STORAGE = "./data/user1.json";
+
     private Note note;
     private ArrayList<Folder> folders;
     private Scanner input;
     boolean keepGoing;
+    private User user;
 
     // EFFECTS : runs the ThoughtDump application
     public ThoughtDumpApp() {
+        user = new User("current user");
         runThoughtDump();
     }
 
     // MODIFIES: this
     // EFFECTS: processes user input
+    // the following code is taken from the TellerApp class in the TellerApp project:
+    // https://github.students.cs.ubc.ca/CPSC210/TellerApp/blob/main/src/main/ca/ubc/cpsc210/bank/ui/TellerApp.java
     private void runThoughtDump() {
         keepGoing = true;
         String command;
@@ -28,11 +35,11 @@ public class ThoughtDumpApp {
         welcome();
 
         while (keepGoing) {
-            displayMenu();
+            mainMenu();
             command = input.next();
             command = command.toLowerCase();
 
-            if (command.equals("3")) {
+            if (command.equals("4")) {
                 keepGoing = false;
             } else {
                 processCommand(command);
@@ -44,7 +51,9 @@ public class ThoughtDumpApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: initializes accounts
+    // EFFECTS: initializes user
+    // the following code is taken from the TellerApp class in the TellerApp project:
+    // https://github.students.cs.ubc.ca/CPSC210/TellerApp/blob/main/src/main/ca/ubc/cpsc210/bank/ui/TellerApp.java
     private void init() {
         folders = new ArrayList<>();
         input = new Scanner(System.in);
@@ -58,24 +67,47 @@ public class ThoughtDumpApp {
         System.out.println("\nhihi :]");
         System.out.println("welcome to ThoughtDump !");
         System.out.println("a cozy and safe space where you can dump all your thoughts");
+        System.out.println("\n do you want to load a previous save file?");
+        System.out.println("\t 1 -> yes");
+        System.out.println("\t 2 -> no");
+    }
+    // TODO last
+    // MODIFIES: this
+    // EFFECTS: if user input is 1, then load a previous save file
+    //          else nothing, skip entire process and continue with application
+    private void processLoadCommand() {
+        // stub
+    }
+    // TODO
+    // MODIFIES: this
+    // EFFECTS: loads notes and folders from file
+    private void loadSavedDumps() {
+        // stub
     }
 
     // EFFECTS: displays menu of options to user
-    private void displayMenu() {
+    // the following code is taken from the TellerApp class in the TellerApp project:
+    // https://github.students.cs.ubc.ca/CPSC210/TellerApp/blob/main/src/main/ca/ubc/cpsc210/bank/ui/TellerApp.java
+    private void mainMenu() {
         System.out.println("\nmenu");
         System.out.println("\nselect from:");
         System.out.println("\t1 -> create new note");
         System.out.println("\t2 -> view folders");
-        System.out.println("\t3 -> quit");
+        System.out.println("\t3 -> save");
+        System.out.println("\t4 -> quit");
     }
 
     // MODIFIES: this
     // EFFECTS: processes user command
+    // the following code is taken from the TellerApp class in the TellerApp project:
+    // https://github.students.cs.ubc.ca/CPSC210/TellerApp/blob/main/src/main/ca/ubc/cpsc210/bank/ui/TellerApp.java
     private void processCommand(String command) {
         if (command.equals("1")) {
             createNote();
         } else if (command.equals("2")) {
             viewFolders();
+        } else if (command.equals("3")) {
+            saveSavedDumps();
         } else {
             System.out.println("selection not valid... try again");
         }
@@ -166,9 +198,8 @@ public class ThoughtDumpApp {
     // EFFECTS: create a new folder based on user input
     private void createFolder() {
         System.out.println("create a new folder !");
-        Folder folder = new Folder();
         System.out.println("\n give your new folder a name");
-        folder.name(input.next());
+        Folder folder = new Folder(input.next());
         folders.add(folder);
         folder.addNote(note);
     }
@@ -194,7 +225,7 @@ public class ThoughtDumpApp {
     }
 
     // MODIFIES: this
-    //EFFECTS : prints the note title and message
+    // EFFECTS : prints the note title and message
     private void openNote(Folder folder) {
         String command = input.next();
         int numberCommand = Integer.parseInt(command) - 1;
@@ -202,6 +233,12 @@ public class ThoughtDumpApp {
         note = listOfNotes.get(numberCommand);
         System.out.println("\nnote title : " + note.getNoteTitle());
         System.out.println("note message : " + note.getMessage());
+    }
+
+    // MODIFIES: this + json TODO - change and finish
+    // EFFECTS : saves the recent notes and folders to file
+    private void saveSavedDumps() {
+
     }
 }
 

@@ -1,3 +1,5 @@
+package model;
+
 import model.Folder;
 import model.Note;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +29,7 @@ class NoteTest {
 
     @Test
     void testAddToFolder() {
-        Folder testFolder = new Folder();
+        Folder testFolder = new Folder("tester");
         testNote.addToFolder(testFolder);
         assertEquals(testFolder, testNote.getFolder());
     }

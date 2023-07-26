@@ -1,16 +1,20 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
 // Represents a folder with a title and full of notes
-public class Folder {
+public class Folder implements Writable {
 
     private String title;
     private ArrayList<Note> notes;
 
     // EFFECTS : creates a new selected empty folder with the given name
-    public Folder() {
-        title = "";
+    public Folder(String title) {
+        this.title = title;
         notes = new ArrayList<>();
     }
 
@@ -21,7 +25,7 @@ public class Folder {
 
     // MODIFIES : this
     // EFFECTS : renames the folder
-    public void name(String newName) {
+    public void rename(String newName) {
         this.title = newName;
     }
 
@@ -40,5 +44,21 @@ public class Folder {
         }
     }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("folder", title);
+        json.put("notes", notesToJson());
+        return json;
+    }
 
+    private JSONArray notesToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Note note : notes) {
+            jsonArray.put(note.toJson());
+        }
+        return jsonArray;
+    }
 }
+
