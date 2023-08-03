@@ -36,4 +36,5 @@ public abstract class Window extends JPanel {
     public ThoughtDumpGUI getGUI() {
         return gui;
     }
+
 }

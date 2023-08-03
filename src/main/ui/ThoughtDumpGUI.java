@@ -5,6 +5,7 @@ import model.Note;
 import model.User;
 import persistence.JsonReader;
 import persistence.JsonWriter;
+import ui.windows.CreateNewNoteWindow;
 import ui.windows.MenuWindow;
 import ui.windows.WelcomeWindow;
 
@@ -18,12 +19,12 @@ public class ThoughtDumpGUI extends JFrame {
     private static final int WIDTH = 700;
     private static final int HEIGHT = 500;
 
-    private JPanel window;
+    private CardLayout windows = new CardLayout();
+    private JPanel currentWindow = new JPanel(windows);
+    private Color background = new Color(195, 166, 222);
 
     private Note note;
     private ArrayList<Folder> folders;
-//    private Scanner input;
-//    boolean keepGoing;
     private User user;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
@@ -37,6 +38,7 @@ public class ThoughtDumpGUI extends JFrame {
         user = new User("current user");
         init();
 
+        loadWindows();
         loadWelcomeWindow();
 
         setVisible(true);
@@ -51,10 +53,15 @@ public class ThoughtDumpGUI extends JFrame {
         note.unselect();
     }
 
-    // EFFECTS: loads welcome window
-    public void loadWelcomeWindow() {
-        window = new WelcomeWindow(this);
-        add(window);
+    public void loadWindows() {
+        WelcomeWindow welcome = new WelcomeWindow(this);
+        MenuWindow menu = new MenuWindow(this);
+        CreateNewNoteWindow newNote = new CreateNewNoteWindow(this);
+
+        currentWindow.add(welcome, "welcome");
+        currentWindow.add(menu, "menu");
+        currentWindow.add(newNote, "new note");
+        this.add(currentWindow);
     }
 
     // MODIFIES: this
@@ -71,11 +78,30 @@ public class ThoughtDumpGUI extends JFrame {
         }
     }
 
+
+    // EFFECTS: loads main menu
+    public void loadWelcomeWindow() {
+        windows.show(currentWindow, "welcome");
+    }
+
     // EFFECTS: loads main menu
     public void loadMenuWindow() {
-        remove(window);
-        window = new MenuWindow(this);
-        add(window);
+        windows.show(currentWindow, "menu");
+    }
+
+    // EFFECTS: loads create new note window
+    public void loadCreateNoteWindow() {
+        windows.show(currentWindow, "new note");
+    }
+
+    // EFFECTS: loads view folders window
+    public void loadViewFoldersWindow() {
+
+    }
+
+    // EFFECTS: loads quit window asking user if they would like to save
+    public void loadQuitWindow() {
+
     }
 
 }

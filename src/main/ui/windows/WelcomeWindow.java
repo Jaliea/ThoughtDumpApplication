@@ -28,9 +28,6 @@ public class WelcomeWindow extends Window {
     }
 
     private void placeTitle() {
-//        title = new JLabel("<html><div style='text-align: center;'>" + titleText + "</div></html>", JLabel.CENTER);
-//        title.setFont(new Font(font, Font.PLAIN, 20));
-//        this.add(title);
         super.placeText(title, titleText, bigSize);
     }
 
