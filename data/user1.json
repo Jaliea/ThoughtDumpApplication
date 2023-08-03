@@ -1,10 +1,19 @@
 {
-    "folders": [{
-        "folder": "phase2",
-        "notes": [{
-            "title": "510am",
-            "message": "im so sleepy oml"
-        }]
-    }],
+    "folders": [
+        {
+            "folder": "phase2",
+            "notes": [{
+                "title": "510am",
+                "message": "im so sleepy oml"
+            }]
+        },
+        {
+            "folder": "july27",
+            "notes": [{
+                "title": "lab 7",
+                "message": "phase 2 check"
+            }]
+        }
+    ],
     "name": "current user"
 }
