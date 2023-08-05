@@ -7,6 +7,7 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 import ui.windows.CreateNewNoteWindow;
 import ui.windows.MenuWindow;
+import ui.windows.ViewFoldersWindow;
 import ui.windows.WelcomeWindow;
 
 import javax.swing.*;
@@ -57,10 +58,12 @@ public class ThoughtDumpGUI extends JFrame {
         WelcomeWindow welcome = new WelcomeWindow(this);
         MenuWindow menu = new MenuWindow(this);
         CreateNewNoteWindow newNote = new CreateNewNoteWindow(this);
+        ViewFoldersWindow viewFolders = new ViewFoldersWindow(this);
 
         currentWindow.add(welcome, "welcome");
         currentWindow.add(menu, "menu");
         currentWindow.add(newNote, "new note");
+        currentWindow.add(viewFolders, "view folders");
         this.add(currentWindow);
     }
 
@@ -94,9 +97,15 @@ public class ThoughtDumpGUI extends JFrame {
         windows.show(currentWindow, "new note");
     }
 
+    // EFFECTS: saves user's input into a note
+    public void saveNote(String userTitle, String userMessage) {
+        note.renameTitle(userTitle);
+        note.write(userMessage);
+    }
+
     // EFFECTS: loads view folders window
     public void loadViewFoldersWindow() {
-
+        windows.show(currentWindow, "view folders");
     }
 
     // EFFECTS: loads quit window asking user if they would like to save

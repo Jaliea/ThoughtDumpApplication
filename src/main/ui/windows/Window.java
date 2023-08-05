@@ -26,13 +26,14 @@ public abstract class Window extends JPanel {
         return p;
     }
 
+    // EFFECTS: assigns text to given JLABEL with given text size
     public void placeText(JLabel something, String text, int size) {
         something = new JLabel("<html><div style='text-align: center;'>" + text + "</div></html>", JLabel.CENTER);
         something.setFont(new Font(font, Font.PLAIN, size));
         this.add(something);
     }
 
-    //EFFECTS: returns the SmartHomeUI controller for this tab
+    //EFFECTS: returns the ThoughtDumpGUI for this tab
     public ThoughtDumpGUI getGUI() {
         return gui;
     }
