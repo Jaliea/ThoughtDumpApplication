@@ -9,6 +9,8 @@ import ui.windows.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowEvent;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -17,7 +19,6 @@ public class ThoughtDumpGUI extends JFrame {
     private static final int WIDTH = 700;
     private static final int HEIGHT = 500;
 
-//    private CardLayout windows = new CardLayout();
     private JPanel currentWindow;
     private Color background = new Color(195, 166, 222);
 
@@ -75,6 +76,9 @@ public class ThoughtDumpGUI extends JFrame {
 
     // EFFECTS: loads main menu
     public void loadMenuWindow() {
+        if (note != null && note.isSelected()) {
+            note.unselect();
+        }
         removeCurrentWindow();
         currentWindow = new MenuWindow(this);
         placeNewWindow();
@@ -85,7 +89,15 @@ public class ThoughtDumpGUI extends JFrame {
         removeCurrentWindow();
         note = new Note();
         note.select();
-        currentWindow = new CreateNewNoteWindow(this);
+        currentWindow = new CreateNewNoteWindow(this, folders);
+        placeNewWindow();
+    }
+
+    public void loadCreateNoteWindow(Folder folder) {
+        removeCurrentWindow();
+        note = new Note();
+        note.select();
+        currentWindow = new CreateNewNoteWindow(this, folders, folder);
         placeNewWindow();
     }
 
@@ -103,16 +115,38 @@ public class ThoughtDumpGUI extends JFrame {
     }
 
     public void loadCreateNewFolderWindow() {
-    }
-
-    public void loadSelectedFolderWindow(Folder folder) {
         removeCurrentWindow();
-        currentWindow = new ViewSelectedFolderWindow(this, folder);
+        currentWindow = new CreateNewFolderWindow(this, note);
         placeNewWindow();
     }
 
+    public void createFolder(Folder folder) {
+        folders.add(folder);
+    }
+
+    public void loadSelectedFolderWindow(Folder selectedFolder) {
+        removeCurrentWindow();
+        currentWindow = new ViewSelectedFolderWindow(this, selectedFolder);
+        placeNewWindow();
+    }
+
+    public void loadSelectedNoteWindow(Note selectedNote) {
+        removeCurrentWindow();
+        currentWindow = new SelectedNoteWindow(this, selectedNote);
+        placeNewWindow();
+    }
+
+    public void saveNoteToFolder(Folder selectedFolder) {
+        int folderIndex = folders.indexOf(selectedFolder);
+        Folder folder = folders.get(folderIndex);
+        folder.addNote(note);
+    }
+
     public void loadSavedMenuWindow() {
-        note.unselect();
+        if (note != null && note.isSelected()) {
+            assert note != null;
+            note.unselect();
+        }
         removeCurrentWindow();
         currentWindow = new SavedMenuWindow(this);
         placeNewWindow();
@@ -120,7 +154,25 @@ public class ThoughtDumpGUI extends JFrame {
 
     // EFFECTS: loads quit window asking user if they would like to save
     public void loadQuitWindow() {
+        removeCurrentWindow();
+        currentWindow = new QuitWindow(this);
+        placeNewWindow();
+    }
 
+    public void saveDumps() {
+        try {
+            user.addFolders(folders);
+            jsonWriter.open();
+            jsonWriter.write(user);
+            jsonWriter.close();
+            System.out.println("\nrecent changes saved to " + JSON_USER1_STORAGE);
+        } catch (FileNotFoundException e) {
+            System.out.println("unable to save to file " + JSON_USER1_STORAGE);
+        }
+    }
+
+    public void quitApp() {
+        dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }
 
     private void placeNewWindow() {
@@ -134,6 +186,4 @@ public class ThoughtDumpGUI extends JFrame {
             remove(currentWindow);
         }
     }
-
-
 }

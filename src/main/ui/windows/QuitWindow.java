@@ -7,42 +7,45 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MenuWindow extends Window {
+public class QuitWindow extends Window {
 
-    private JLabel title;
-    private String titleText = "select from:";
+    private String button1 = "yes";
+    private String button2 = "no";
 
-    private String button1 = "create a note";
-    private String button2 = "view your folders";
-    private String button3 = "quit";
+    private String sep = System.getProperty("file.separator");
+    private ImageIcon goodbyeImage = new ImageIcon(System.getProperty("user.dir") + sep
+            + "images" + sep + "goodbye.png");
 
-    public MenuWindow(ThoughtDumpGUI gui) {
+    public QuitWindow(ThoughtDumpGUI gui) {
         super(gui);
-
         setLayout(new GridLayout(3, 1));
-
+        placeImage();
         placeTitle();
         placeButtons();
     }
 
+    private void placeImage() {
+        JLabel image = new JLabel(goodbyeImage);
+        this.add(image);
+    }
+
     private void placeTitle() {
-        super.placeText(title, titleText, bigSize);
+        super.placeText(new JLabel("title"), "thanks for stopping by !<br>do you want to save before you go?",
+                bigSize);
     }
 
     private void placeButtons() {
         JButton b1 = new JButton(button1);
         JButton b2 = new JButton(button2);
-        JButton b3 = new JButton(button3);
 
         JPanel buttonRow = formatButtonRow(b1);
         buttonRow.add(b2);
-        buttonRow.add(b3);
-        this.add(buttonRow);
 
         ActionListener commonActionListener = createCommonActionListener();
         b1.addActionListener(commonActionListener);
         b2.addActionListener(commonActionListener);
-        b3.addActionListener(commonActionListener);
+
+        this.add(buttonRow);
     }
 
     private ActionListener createCommonActionListener() {
@@ -51,12 +54,9 @@ public class MenuWindow extends Window {
             public void actionPerformed(ActionEvent e) {
                 String buttonPressed = e.getActionCommand();
                 if (buttonPressed.equals(button1)) {
-                    getGUI().loadCreateNoteWindow();
-                } else if (buttonPressed.equals(button2)) {
-                    getGUI().loadViewFoldersWindow();
-                } else if (buttonPressed.equals(button3)) {
-                    getGUI().loadQuitWindow();
+                    getGUI().saveDumps();
                 }
+                getGUI().quitApp();
             }
         };
     }

@@ -14,9 +14,6 @@ public class SavedMenuWindow extends MenuWindow {
     }
 
     private void placeSavedMessage() {
-        savedMsg = new JLabel("<html><div style='text-align: center;'>" + "saved :]" + "</div></html>",
-                JLabel.CENTER);
-        savedMsg.setFont(new Font("Dialog", Font.ITALIC, 10));
-        this.add(savedMsg);
+        super.placeItalics(savedMsg, "saved :]", 10);
     }
 }

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 // creates a new Thought Dump application window
-public class ThoughtDumpApp {
+public class ThoughtDumpCUI {
     private static final String JSON_USER1_STORAGE = "./data/user1.json";
 
     private Note note;
@@ -25,7 +25,7 @@ public class ThoughtDumpApp {
 
     // MODIFIES: this
     // EFFECTS : runs the ThoughtDump application
-    public ThoughtDumpApp() {
+    public ThoughtDumpCUI() {
         user = new User("current user");
         jsonWriter = new JsonWriter(JSON_USER1_STORAGE);
         jsonReader = new JsonReader(JSON_USER1_STORAGE);

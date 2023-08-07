@@ -33,3 +33,11 @@ to write down all my thoughts, and it feels a little weird having an email solel
 - As a user, when I select the quit option from the application menu, I want to be reminded that I have the option to 
 save my recent changes to file. 
 - As a user, when I start the application, I want to be given the option to load my notes and folders from file.
+
+# Instructions for Grader
+
+- You can generate the first required action related to adding Xs to a Y by creating notes and saving it to a folder 
+- You can generate the second required action related to adding Xs to a Y by creating folders to the current user
+- You can locate my visual component by going to the Quit window
+- You can save the state of my application by going to the Quit window and pressing the "yes" button
+- You can reload the state of my application by pressing the "yes" button on the opening screen

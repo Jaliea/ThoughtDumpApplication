@@ -14,7 +14,6 @@ public class ViewSelectedFolderWindow extends Window {
     private JLabel title;
     private Folder folder;
     private List<Note> notes;
-    private int buttonSpacing = 10;
 
     public ViewSelectedFolderWindow(ThoughtDumpGUI gui, Folder folder) {
         super(gui);
@@ -25,6 +24,7 @@ public class ViewSelectedFolderWindow extends Window {
         this.setAlignmentX(CENTER_ALIGNMENT);
 
         setLayout(new GridLayout(3, 1));
+
     }
 
     private void placeTitle() {
@@ -59,9 +59,13 @@ public class ViewSelectedFolderWindow extends Window {
             public void actionPerformed(ActionEvent e) {
                 String buttonPressed = e.getActionCommand();
                 if (buttonPressed.equals(note.getNoteTitle())) {
-                    getGUI().loadSelectedFolderWindow(folder);
+                    getGUI().loadSelectedNoteWindow(note);
                 }
             }
         };
+    }
+
+    private void placeItalics() {
+        super.placeItalics(new JLabel(), "this folder has no notes yet !", 10);
     }
 }

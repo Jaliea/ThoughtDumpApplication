@@ -1,6 +1,5 @@
 package ui.windows;
 
-import ui.ButtonNames;
 import ui.ThoughtDumpGUI;
 
 import javax.swing.*;
@@ -16,6 +15,9 @@ public class WelcomeWindow extends Window {
 
     private JLabel question;
     private String questionText = "do you want to load a previous save file?";
+
+    private String button1 = "yes";
+    private String button2 = "no";
 
 
     public WelcomeWindow(ThoughtDumpGUI gui) {
@@ -33,8 +35,8 @@ public class WelcomeWindow extends Window {
 
     private void placeButtons() {
         super.placeText(question, questionText, medSize);
-        JButton b1 = new JButton(ButtonNames.YES.getValue());
-        JButton b2 = new JButton((ButtonNames.NO.getValue()));
+        JButton b1 = new JButton(button1);
+        JButton b2 = new JButton(button2);
 
         JPanel buttonRow = formatButtonRow(b1);
         buttonRow.add(b2);
@@ -45,7 +47,7 @@ public class WelcomeWindow extends Window {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String buttonPressed = e.getActionCommand();
-                if (buttonPressed.equals(ButtonNames.YES.getValue())) {
+                if (buttonPressed.equals(button1)) {
                     getGUI().loadSavedDumps();
                 }
                 getGUI().loadMenuWindow();

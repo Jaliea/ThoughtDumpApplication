@@ -13,6 +13,8 @@ public abstract class Window extends JPanel {
     protected int bigSize = 20;
     protected int medSize = 14;
 
+    protected int buttonSpacing = 10;
+
     public Window(ThoughtDumpGUI gui) {
         this.gui = gui;
     }
@@ -30,6 +32,12 @@ public abstract class Window extends JPanel {
     public void placeText(JLabel something, String text, int size) {
         something = new JLabel("<html><div style='text-align: center;'>" + text + "</div></html>", JLabel.CENTER);
         something.setFont(new Font(font, Font.PLAIN, size));
+        this.add(something);
+    }
+
+    public void placeItalics(JLabel something, String text, int size) {
+        something = new JLabel("<html><div style='text-align: center;'>" + text + "</div></html>", JLabel.CENTER);
+        something.setFont(new Font(font, Font.ITALIC, size));
         this.add(something);
     }
 

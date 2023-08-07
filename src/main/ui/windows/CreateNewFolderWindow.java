@@ -1,5 +1,7 @@
 package ui.windows;
 
+import model.Folder;
+import model.Note;
 import ui.ThoughtDumpGUI;
 
 import javax.swing.*;
@@ -7,42 +9,39 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MenuWindow extends Window {
-
+public class CreateNewFolderWindow extends Window {
     private JLabel title;
-    private String titleText = "select from:";
+    private Note note;
+    private JTextField userTitle;
 
-    private String button1 = "create a note";
-    private String button2 = "view your folders";
-    private String button3 = "quit";
+    private String button1 = "save";
 
-    public MenuWindow(ThoughtDumpGUI gui) {
+    public CreateNewFolderWindow(ThoughtDumpGUI gui, Note note) {
         super(gui);
+        this.note = note;
 
-        setLayout(new GridLayout(3, 1));
+        setLayout(new GridLayout(4, 1));
 
         placeTitle();
+        placeUserInput();
         placeButtons();
     }
 
     private void placeTitle() {
-        super.placeText(title, titleText, bigSize);
+        super.placeText(title, "name your new folder", bigSize);
+    }
+
+    private void placeUserInput() {
+        userTitle = new JTextField(50);
+        this.add(userTitle);
     }
 
     private void placeButtons() {
         JButton b1 = new JButton(button1);
-        JButton b2 = new JButton(button2);
-        JButton b3 = new JButton(button3);
-
         JPanel buttonRow = formatButtonRow(b1);
-        buttonRow.add(b2);
-        buttonRow.add(b3);
         this.add(buttonRow);
-
         ActionListener commonActionListener = createCommonActionListener();
         b1.addActionListener(commonActionListener);
-        b2.addActionListener(commonActionListener);
-        b3.addActionListener(commonActionListener);
     }
 
     private ActionListener createCommonActionListener() {
@@ -51,11 +50,12 @@ public class MenuWindow extends Window {
             public void actionPerformed(ActionEvent e) {
                 String buttonPressed = e.getActionCommand();
                 if (buttonPressed.equals(button1)) {
-                    getGUI().loadCreateNoteWindow();
-                } else if (buttonPressed.equals(button2)) {
-                    getGUI().loadViewFoldersWindow();
-                } else if (buttonPressed.equals(button3)) {
-                    getGUI().loadQuitWindow();
+                    Folder folder = new Folder(userTitle.getText());
+                    getGUI().createFolder(folder);
+                    if (note != null && note.isSelected()) {
+                        getGUI().saveNoteToFolder(folder);
+                    }
+                    getGUI().loadSavedMenuWindow();
                 }
             }
         };

@@ -14,7 +14,8 @@ public class ViewFoldersWindow extends Window {
     private JLabel title;
     private List<Folder> folders;
     private Note note;
-    private int buttonSpacing = 10;
+
+    private String cnfButton = "create a new folder";
 
     public ViewFoldersWindow(ThoughtDumpGUI gui, List<Folder> folders, Note note) {
         super(gui);
@@ -33,25 +34,27 @@ public class ViewFoldersWindow extends Window {
     }
 
     private void placeButtons() {
-        if (folders.isEmpty()) {
-            getGUI().loadCreateNewFolderWindow();
-        } else {
-            JPanel buttons = new JPanel();
-            buttons.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS));
+        JPanel buttons = new JPanel();
+        buttons.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS));
 
-            for (Folder folder : folders) {
-                JButton button = new JButton(folder.getFolderTitle());
-                button.setAlignmentX(CENTER_ALIGNMENT);
-                buttons.add(button);
-                ActionListener commonActionListener = createCommonActionListener(folder);
-                button.addActionListener(commonActionListener);
-                buttons.add(Box.createRigidArea(new Dimension(0, buttonSpacing)));
-            }
-
-            buttons.setAlignmentX(CENTER_ALIGNMENT);
-            buttons.setAlignmentY(CENTER_ALIGNMENT);
-            this.add(buttons, CENTER_ALIGNMENT);
+        for (Folder folder : folders) {
+            JButton button = new JButton(folder.getFolderTitle());
+            button.setAlignmentX(CENTER_ALIGNMENT);
+            buttons.add(button);
+            ActionListener commonActionListener = createCommonActionListener(folder);
+            button.addActionListener(commonActionListener);
+            buttons.add(Box.createRigidArea(new Dimension(0, buttonSpacing)));
         }
+
+        JButton newFolder = new JButton(cnfButton);
+        newFolder.setAlignmentX(CENTER_ALIGNMENT);
+        ActionListener commonActionListener = createCommonActionListener();
+        newFolder.addActionListener(commonActionListener);
+        buttons.add(newFolder);
+
+        buttons.setAlignmentX(CENTER_ALIGNMENT);
+        buttons.setAlignmentY(CENTER_ALIGNMENT);
+        this.add(buttons, CENTER_ALIGNMENT);
     }
 
     private ActionListener createCommonActionListener(Folder folder) {
@@ -60,11 +63,28 @@ public class ViewFoldersWindow extends Window {
             public void actionPerformed(ActionEvent e) {
                 String buttonPressed = e.getActionCommand();
                 if (buttonPressed.equals(folder.getFolderTitle())) {
-                    if (note.isSelected()) {
+                    if (note != null && note.isSelected()) {
+                        getGUI().saveNoteToFolder(folder);
                         getGUI().loadSavedMenuWindow();
                     } else {
-                        getGUI().loadSelectedFolderWindow(folder);
+                        if (folder.viewNotes().isEmpty()) {
+                            getGUI().loadCreateNoteWindow(folder);
+                        } else {
+                            getGUI().loadSelectedFolderWindow(folder);
+                        }
                     }
+                }
+            }
+        };
+    }
+
+    private ActionListener createCommonActionListener() {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String buttonPressed = e.getActionCommand();
+                if (buttonPressed.equals(cnfButton)) {
+                    getGUI().loadCreateNewFolderWindow();
                 }
             }
         };
