@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+// Represents the window where the user can create a new note
 public class CreateNewNoteWindow extends Window {
 
     private JLabel title;
@@ -21,6 +22,7 @@ public class CreateNewNoteWindow extends Window {
     private String button1 = "save";
     private String button2 = "dump";
 
+    // EFFECTS: creates a new window that allows the user to create a new note
     public CreateNewNoteWindow(ThoughtDumpGUI gui, List<Folder> folders) {
         super(gui);
         this.folders = folders;
@@ -34,6 +36,7 @@ public class CreateNewNoteWindow extends Window {
         placeButtons();
     }
 
+    // EFFECTS: modified screen with a message at the bottom if navigated from an empty folder
     public CreateNewNoteWindow(ThoughtDumpGUI gui, List<Folder> folders, Folder folder) {
         super(gui);
         this.folders = folders;
@@ -48,6 +51,8 @@ public class CreateNewNoteWindow extends Window {
         placeItalics();
     }
 
+    // MODIFIES: this
+    // EFFECTS: places italic message at the bottom
     private void placeItalics() {
         JLabel italics = new JLabel("<html><div style='text-align: center;'>" + "this folder is empty !"
                 + "</div></html>", JLabel.CENTER);
@@ -57,6 +62,7 @@ public class CreateNewNoteWindow extends Window {
         this.add(italics, grid);
     }
 
+    // MODIFIES: this
     // EFFECTS: places save and dump buttons
     private void placeButtons() {
         JButton b1 = new JButton(button1);
@@ -75,6 +81,10 @@ public class CreateNewNoteWindow extends Window {
         b2.addActionListener(commonActionListener);
     }
 
+    // MODIFIES: buttons
+    // EFFECTS: allows the buttons to be clicked, dumps or saves the note to the User, and navigates back to the
+    //          main manu, if the user doesn't have any folders but wants to save the note, then it navigates to the
+    //          window to create a new folder
     private ActionListener createCommonActionListener() {
         return new ActionListener() {
             @Override

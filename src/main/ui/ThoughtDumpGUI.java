@@ -33,6 +33,7 @@ public class ThoughtDumpGUI extends JFrame {
     private CreateNewNoteWindow newNote;
     private ViewFoldersWindow viewFolders;
 
+    // MODIFIES: this
     // EFFECTS: sets up window that ThoughtDump will be displayed
     public ThoughtDumpGUI() {
         super("ThoughtDump");
@@ -46,6 +47,7 @@ public class ThoughtDumpGUI extends JFrame {
         setVisible(true);
     }
 
+    // MODIFIES: this
     // EFFECTS: initializes user
     private void init() {
         jsonWriter = new JsonWriter(JSON_USER1_STORAGE);
@@ -67,14 +69,15 @@ public class ThoughtDumpGUI extends JFrame {
         }
     }
 
-
-    // EFFECTS: loads main menu
+    // MODIFIES: this
+    // EFFECTS: loads welcome window
     public void loadWelcomeWindow() {
         currentWindow = new WelcomeWindow(this);
         this.add(currentWindow);
     }
 
-    // EFFECTS: loads main menu
+    // MODIFIES: this
+    // EFFECTS: loads main menu window
     public void loadMenuWindow() {
         if (note != null && note.isSelected()) {
             note.unselect();
@@ -84,7 +87,8 @@ public class ThoughtDumpGUI extends JFrame {
         placeNewWindow();
     }
 
-    // EFFECTS: loads create new note window
+    // MODIFIES: this
+    // EFFECTS: loads window to create a new note
     public void loadCreateNoteWindow() {
         removeCurrentWindow();
         note = new Note();
@@ -93,6 +97,8 @@ public class ThoughtDumpGUI extends JFrame {
         placeNewWindow();
     }
 
+    // MODIFIES: this
+    // EFFECTS: loads window to create a new note from an empty folder
     public void loadCreateNoteWindow(Folder folder) {
         removeCurrentWindow();
         note = new Note();
@@ -101,47 +107,61 @@ public class ThoughtDumpGUI extends JFrame {
         placeNewWindow();
     }
 
+    // MODIFIES: Note note
     // EFFECTS: saves user's input into a note
     public void saveNote(String userTitle, String userMessage) {
         note.renameTitle(userTitle);
         note.write(userMessage);
     }
 
-    // EFFECTS: loads view folders window
+    // MODIFIES: this
+    // EFFECTS: loads window to view all folders
     public void loadViewFoldersWindow() {
         removeCurrentWindow();
         currentWindow = new ViewFoldersWindow(this, folders, note);
         placeNewWindow();
     }
 
+    // MODIFIES: this
+    // EFFECTS: loads window to create a new folder
     public void loadCreateNewFolderWindow() {
         removeCurrentWindow();
         currentWindow = new CreateNewFolderWindow(this, note);
         placeNewWindow();
     }
 
+    // MODIFIES: user
+    // EFFECTS: adds folder to user's list of folders
     public void createFolder(Folder folder) {
         folders.add(folder);
     }
 
+    // MODIFIES: this
+    // EFFECTS: loads window to select a folder to view or save a note in
     public void loadSelectedFolderWindow(Folder selectedFolder) {
         removeCurrentWindow();
         currentWindow = new ViewSelectedFolderWindow(this, selectedFolder);
         placeNewWindow();
     }
 
+    // MODIFIES: this
+    // EFFECTS: loads window to view the selected note
     public void loadSelectedNoteWindow(Note selectedNote) {
         removeCurrentWindow();
         currentWindow = new SelectedNoteWindow(this, selectedNote);
         placeNewWindow();
     }
 
+    // MODIFIES: Folder selectedFolder
+    // EFFECTS: saves the current note to the selected folder
     public void saveNoteToFolder(Folder selectedFolder) {
         int folderIndex = folders.indexOf(selectedFolder);
         Folder folder = folders.get(folderIndex);
         folder.addNote(note);
     }
 
+    // MODIFIES: this
+    // EFFECTS: loads modified main menu window
     public void loadSavedMenuWindow() {
         if (note != null && note.isSelected()) {
             assert note != null;
@@ -152,6 +172,7 @@ public class ThoughtDumpGUI extends JFrame {
         placeNewWindow();
     }
 
+    // MODIFIES: this
     // EFFECTS: loads quit window asking user if they would like to save
     public void loadQuitWindow() {
         removeCurrentWindow();
@@ -159,6 +180,8 @@ public class ThoughtDumpGUI extends JFrame {
         placeNewWindow();
     }
 
+    // MODIFIES: user and json
+    // EFFECTS: saves all recent data to the user1
     public void saveDumps() {
         try {
             user.addFolders(folders);
@@ -171,16 +194,22 @@ public class ThoughtDumpGUI extends JFrame {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: quits application
     public void quitApp() {
         dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }
 
+    // MODIFIES: this
+    // EFFECTS: refreshes current window to display a new window
     private void placeNewWindow() {
         this.add(currentWindow);
         revalidate();
         repaint();
     }
 
+    // MODIFIES: this
+    // EFFECTS: removes the JPanel currently displayed
     private void removeCurrentWindow() {
         if (currentWindow != null) {
             remove(currentWindow);

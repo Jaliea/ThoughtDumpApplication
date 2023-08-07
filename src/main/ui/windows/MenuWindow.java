@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// represents the main menu window, the central navigation window
 public class MenuWindow extends Window {
 
     private JLabel title;
@@ -16,6 +17,7 @@ public class MenuWindow extends Window {
     private String button2 = "view your folders";
     private String button3 = "quit";
 
+    // EFFECTS: creates a window for the main menu with a title and buttons
     public MenuWindow(ThoughtDumpGUI gui) {
         super(gui);
 
@@ -25,10 +27,14 @@ public class MenuWindow extends Window {
         placeButtons();
     }
 
+    // MODIFIES: this
+    // EFFECTS: places title at the top of the window
     private void placeTitle() {
         super.placeText(title, titleText, bigSize);
     }
 
+    // MODIFIES: this
+    // EFFECTS: places buttons underneath the title for the user to navigate to different windows
     private void placeButtons() {
         JButton b1 = new JButton(button1);
         JButton b2 = new JButton(button2);
@@ -45,6 +51,8 @@ public class MenuWindow extends Window {
         b3.addActionListener(commonActionListener);
     }
 
+    // MODIFIES: this
+    // EFFECTS: makes the buttons clickable and actionable to different windows
     private ActionListener createCommonActionListener() {
         return new ActionListener() {
             @Override

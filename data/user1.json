@@ -13,6 +13,20 @@
                 "title": "lab 7",
                 "message": "phase 2 check"
             }]
+        },
+        {
+            "folder": "wowowowowow",
+            "notes": [{
+                "title": "phase 3",
+                "message": "i finished !"
+            }]
+        },
+        {
+            "folder": "notes for babi",
+            "notes": [{
+                "title": "i love my gf >.>",
+                "message": "today i had an amazing day with my gf i woke up this morning uhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh <3 i love you \ni love andrew he is the best bf in the world uwu "
+            }]
         }
     ],
     "name": "current user"

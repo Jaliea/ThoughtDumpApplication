@@ -5,6 +5,7 @@ import ui.ThoughtDumpGUI;
 import javax.swing.*;
 import java.awt.*;
 
+// abstract class for all displayed windows
 public abstract class Window extends JPanel {
 
     private final ThoughtDumpGUI gui;
@@ -15,6 +16,7 @@ public abstract class Window extends JPanel {
 
     protected int buttonSpacing = 10;
 
+    // EFFECTS: creates a new JPanel
     public Window(ThoughtDumpGUI gui) {
         this.gui = gui;
     }
@@ -28,20 +30,21 @@ public abstract class Window extends JPanel {
         return p;
     }
 
-    // EFFECTS: assigns text to given JLABEL with given text size
+    // EFFECTS: assigns text to given JLabel with given text size in plain font
     public void placeText(JLabel something, String text, int size) {
         something = new JLabel("<html><div style='text-align: center;'>" + text + "</div></html>", JLabel.CENTER);
         something.setFont(new Font(font, Font.PLAIN, size));
         this.add(something);
     }
 
+    // EFFECTS: assigns text to given JLabel with given text size in italics
     public void placeItalics(JLabel something, String text, int size) {
         something = new JLabel("<html><div style='text-align: center;'>" + text + "</div></html>", JLabel.CENTER);
         something.setFont(new Font(font, Font.ITALIC, size));
         this.add(something);
     }
 
-    //EFFECTS: returns the ThoughtDumpGUI for this tab
+    //EFFECTS: returns the ThoughtDumpGUI for this window
     public ThoughtDumpGUI getGUI() {
         return gui;
     }

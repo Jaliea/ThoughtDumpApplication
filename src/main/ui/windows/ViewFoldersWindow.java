@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+// represents the window where the user views all their saved folders
 public class ViewFoldersWindow extends Window {
     private JLabel title;
     private List<Folder> folders;
@@ -17,6 +18,7 @@ public class ViewFoldersWindow extends Window {
 
     private String cnfButton = "create a new folder";
 
+    // EFFECTS: creates a window with a title and buttons that are all in the center of the screen
     public ViewFoldersWindow(ThoughtDumpGUI gui, List<Folder> folders, Note note) {
         super(gui);
         this.folders = folders;
@@ -26,13 +28,17 @@ public class ViewFoldersWindow extends Window {
         placeButtons();
         this.setAlignmentX(CENTER_ALIGNMENT);
 
-        setLayout(new GridLayout(3, 1));
+        setLayout(new GridLayout(BoxLayout.X_AXIS, 1));
     }
 
+    // MODIFIES: this
+    // EFFECTS: places the title of the window at the top of the screen
     private void placeTitle() {
         super.placeText(title, "select the folder you want to open", bigSize);
     }
 
+    // MODIFIES: this
+    // EFFECTS: places buttons for all the user's folders and a button to create a new folder
     private void placeButtons() {
         JPanel buttons = new JPanel();
         buttons.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS));
@@ -57,6 +63,8 @@ public class ViewFoldersWindow extends Window {
         this.add(buttons, CENTER_ALIGNMENT);
     }
 
+    // MODIFIES: buttons of folders
+    // EFFECTS: makes buttons clickable and actionable to navigate to the selected folder window
     private ActionListener createCommonActionListener(Folder folder) {
         return new ActionListener() {
             @Override
@@ -78,6 +86,8 @@ public class ViewFoldersWindow extends Window {
         };
     }
 
+    // MODIFIES: create a new folder button
+    // EFFECTS: makes button clickable and navigates to the create a new folder window
     private ActionListener createCommonActionListener() {
         return new ActionListener() {
             @Override
