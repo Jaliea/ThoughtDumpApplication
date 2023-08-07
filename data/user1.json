@@ -23,9 +23,22 @@
         },
         {
             "folder": "notes for babi",
+            "notes": [
+                {
+                    "title": "i love my gf >.>",
+                    "message": "today i had an amazing day with my gf i woke up this morning uhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh <3 i love you \ni love andrew he is the best bf in the world uwu "
+                },
+                {
+                    "title": "helllooooooo",
+                    "message": "i loovovveeee youuuuuu uwuuwuwuwwuwu"
+                }
+            ]
+        },
+        {
+            "folder": "phase 4",
             "notes": [{
-                "title": "i love my gf >.>",
-                "message": "today i had an amazing day with my gf i woke up this morning uhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh <3 i love you \ni love andrew he is the best bf in the world uwu "
+                "title": "phase 4 task 2",
+                "message": "completed!"
             }]
         }
     ],

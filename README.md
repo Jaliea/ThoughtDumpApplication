@@ -41,3 +41,17 @@ save my recent changes to file.
 - You can locate my visual component by going to the Quit window
 - You can save the state of my application by going to the Quit window and pressing the "yes" button
 - You can reload the state of my application by pressing the "yes" button on the opening screen
+
+# Phase 4: Task 2
+
+Mon Aug 07 15:15:21 PDT 2023
+current user : loaded from ./data/user1.json
+
+Mon Aug 07 15:15:42 PDT 2023
+created new note: phase 4 task 2
+
+Mon Aug 07 15:15:48 PDT 2023
+added phase 4 task 2 note to phase 4 folder
+
+Mon Aug 07 15:15:57 PDT 2023
+saved recent changed to ./data/user1.json

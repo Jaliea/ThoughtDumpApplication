@@ -1,8 +1,10 @@
 package ui;
 
+import model.EventLog;
 import model.Folder;
 import model.Note;
 import model.User;
+import model.Event;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 import ui.windows.*;
@@ -33,6 +35,7 @@ public class ThoughtDumpGUI extends JFrame {
     private CreateNewNoteWindow newNote;
     private ViewFoldersWindow viewFolders;
 
+
     // MODIFIES: this
     // EFFECTS: sets up window that ThoughtDump will be displayed
     public ThoughtDumpGUI() {
@@ -62,8 +65,8 @@ public class ThoughtDumpGUI extends JFrame {
     public void loadSavedDumps() {
         try {
             user = jsonReader.read();
-            System.out.println(user.getName() + " : loaded from " + JSON_USER1_STORAGE);
             folders = (ArrayList<Folder>) user.getFolders();
+            EventLog.getInstance().logEvent(new Event((user.getName() + " : loaded from " + JSON_USER1_STORAGE)));
         } catch (IOException e) {
             System.out.println("unable to read from file " + JSON_USER1_STORAGE);
         }
@@ -112,6 +115,7 @@ public class ThoughtDumpGUI extends JFrame {
     public void saveNote(String userTitle, String userMessage) {
         note.renameTitle(userTitle);
         note.write(userMessage);
+        EventLog.getInstance().logEvent(new Event("created new note: " + note.getNoteTitle()));
     }
 
     // MODIFIES: this
@@ -158,6 +162,8 @@ public class ThoughtDumpGUI extends JFrame {
         int folderIndex = folders.indexOf(selectedFolder);
         Folder folder = folders.get(folderIndex);
         folder.addNote(note);
+        EventLog.getInstance().logEvent(new Event("added "
+                + note.getNoteTitle() + " note to " + selectedFolder.getFolderTitle() + " folder"));
     }
 
     // MODIFIES: this
@@ -188,7 +194,7 @@ public class ThoughtDumpGUI extends JFrame {
             jsonWriter.open();
             jsonWriter.write(user);
             jsonWriter.close();
-            System.out.println("\nrecent changes saved to " + JSON_USER1_STORAGE);
+            EventLog.getInstance().logEvent(new Event("saved recent changed to " + JSON_USER1_STORAGE));
         } catch (FileNotFoundException e) {
             System.out.println("unable to save to file " + JSON_USER1_STORAGE);
         }
@@ -197,6 +203,9 @@ public class ThoughtDumpGUI extends JFrame {
     // MODIFIES: this
     // EFFECTS: quits application
     public void quitApp() {
+
+        EventPrinter printer = new EventPrinter();
+        printer.printLog(EventLog.getInstance());
         dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }
 
