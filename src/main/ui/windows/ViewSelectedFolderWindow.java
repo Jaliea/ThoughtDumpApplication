@@ -10,17 +10,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-public class ViewFoldersWindow extends Window {
+public class ViewSelectedFolderWindow extends Window {
     private JLabel title;
-    private List<Folder> folders;
-    private Note note;
+    private Folder folder;
+    private List<Note> notes;
     private int buttonSpacing = 10;
 
-    public ViewFoldersWindow(ThoughtDumpGUI gui, List<Folder> folders, Note note) {
+    public ViewSelectedFolderWindow(ThoughtDumpGUI gui, Folder folder) {
         super(gui);
-        this.folders = folders;
-        this.note = note;
-
+        this.folder = folder;
+        notes = folder.viewNotes();
         placeTitle();
         placeButtons();
         this.setAlignmentX(CENTER_ALIGNMENT);
@@ -29,21 +28,21 @@ public class ViewFoldersWindow extends Window {
     }
 
     private void placeTitle() {
-        super.placeText(title, "select the folder you want to open", bigSize);
+        super.placeText(title, "select the note you want to view", bigSize);
     }
 
     private void placeButtons() {
-        if (folders.isEmpty()) {
+        if (notes.isEmpty()) {
             getGUI().loadCreateNewFolderWindow();
         } else {
             JPanel buttons = new JPanel();
             buttons.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS));
 
-            for (Folder folder : folders) {
-                JButton button = new JButton(folder.getFolderTitle());
+            for (Note note : notes) {
+                JButton button = new JButton(note.getNoteTitle());
                 button.setAlignmentX(CENTER_ALIGNMENT);
                 buttons.add(button);
-                ActionListener commonActionListener = createCommonActionListener(folder);
+                ActionListener commonActionListener = createCommonActionListener(note);
                 button.addActionListener(commonActionListener);
                 buttons.add(Box.createRigidArea(new Dimension(0, buttonSpacing)));
             }
@@ -54,21 +53,15 @@ public class ViewFoldersWindow extends Window {
         }
     }
 
-    private ActionListener createCommonActionListener(Folder folder) {
+    private ActionListener createCommonActionListener(Note note) {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String buttonPressed = e.getActionCommand();
-                if (buttonPressed.equals(folder.getFolderTitle())) {
-                    if (note.isSelected()) {
-                        getGUI().loadSavedMenuWindow();
-                    } else {
-                        getGUI().loadSelectedFolderWindow(folder);
-                    }
+                if (buttonPressed.equals(note.getNoteTitle())) {
+                    getGUI().loadSelectedFolderWindow(folder);
                 }
             }
         };
     }
-
-
 }

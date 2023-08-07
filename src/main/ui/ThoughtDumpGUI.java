@@ -5,10 +5,7 @@ import model.Note;
 import model.User;
 import persistence.JsonReader;
 import persistence.JsonWriter;
-import ui.windows.CreateNewNoteWindow;
-import ui.windows.MenuWindow;
-import ui.windows.ViewFoldersWindow;
-import ui.windows.WelcomeWindow;
+import ui.windows.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,8 +17,8 @@ public class ThoughtDumpGUI extends JFrame {
     private static final int WIDTH = 700;
     private static final int HEIGHT = 500;
 
-    private CardLayout windows = new CardLayout();
-    private JPanel currentWindow = new JPanel(windows);
+//    private CardLayout windows = new CardLayout();
+    private JPanel currentWindow;
     private Color background = new Color(195, 166, 222);
 
     private Note note;
@@ -30,16 +27,19 @@ public class ThoughtDumpGUI extends JFrame {
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
+    private WelcomeWindow welcome;
+    private MenuWindow menu;
+    private CreateNewNoteWindow newNote;
+    private ViewFoldersWindow viewFolders;
+
     // EFFECTS: sets up window that ThoughtDump will be displayed
     public ThoughtDumpGUI() {
         super("ThoughtDump");
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         user = new User("current user");
         init();
 
-        loadWindows();
         loadWelcomeWindow();
 
         setVisible(true);
@@ -50,21 +50,6 @@ public class ThoughtDumpGUI extends JFrame {
         jsonWriter = new JsonWriter(JSON_USER1_STORAGE);
         jsonReader = new JsonReader(JSON_USER1_STORAGE);
         folders = new ArrayList<>();
-        note = new Note();
-        note.unselect();
-    }
-
-    public void loadWindows() {
-        WelcomeWindow welcome = new WelcomeWindow(this);
-        MenuWindow menu = new MenuWindow(this);
-        CreateNewNoteWindow newNote = new CreateNewNoteWindow(this);
-        ViewFoldersWindow viewFolders = new ViewFoldersWindow(this);
-
-        currentWindow.add(welcome, "welcome");
-        currentWindow.add(menu, "menu");
-        currentWindow.add(newNote, "new note");
-        currentWindow.add(viewFolders, "view folders");
-        this.add(currentWindow);
     }
 
     // MODIFIES: this
@@ -84,17 +69,24 @@ public class ThoughtDumpGUI extends JFrame {
 
     // EFFECTS: loads main menu
     public void loadWelcomeWindow() {
-        windows.show(currentWindow, "welcome");
+        currentWindow = new WelcomeWindow(this);
+        this.add(currentWindow);
     }
 
     // EFFECTS: loads main menu
     public void loadMenuWindow() {
-        windows.show(currentWindow, "menu");
+        removeCurrentWindow();
+        currentWindow = new MenuWindow(this);
+        placeNewWindow();
     }
 
     // EFFECTS: loads create new note window
     public void loadCreateNoteWindow() {
-        windows.show(currentWindow, "new note");
+        removeCurrentWindow();
+        note = new Note();
+        note.select();
+        currentWindow = new CreateNewNoteWindow(this);
+        placeNewWindow();
     }
 
     // EFFECTS: saves user's input into a note
@@ -105,12 +97,43 @@ public class ThoughtDumpGUI extends JFrame {
 
     // EFFECTS: loads view folders window
     public void loadViewFoldersWindow() {
-        windows.show(currentWindow, "view folders");
+        removeCurrentWindow();
+        currentWindow = new ViewFoldersWindow(this, folders, note);
+        placeNewWindow();
+    }
+
+    public void loadCreateNewFolderWindow() {
+    }
+
+    public void loadSelectedFolderWindow(Folder folder) {
+        removeCurrentWindow();
+        currentWindow = new ViewSelectedFolderWindow(this, folder);
+        placeNewWindow();
+    }
+
+    public void loadSavedMenuWindow() {
+        note.unselect();
+        removeCurrentWindow();
+        currentWindow = new SavedMenuWindow(this);
+        placeNewWindow();
     }
 
     // EFFECTS: loads quit window asking user if they would like to save
     public void loadQuitWindow() {
 
     }
+
+    private void placeNewWindow() {
+        this.add(currentWindow);
+        revalidate();
+        repaint();
+    }
+
+    private void removeCurrentWindow() {
+        if (currentWindow != null) {
+            remove(currentWindow);
+        }
+    }
+
 
 }

@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 public class WelcomeWindow extends Window {
 
     private JLabel title;
-    private String titleText = "hihi<br>welcome to ThoughtDump"
+    private String titleText = "hihi<br>welcome to ThoughtDump :]"
             + "<br>a cozy and safe space where you can dump all your thoughts";
 
     private JLabel question;
