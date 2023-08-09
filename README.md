@@ -55,3 +55,10 @@ added phase 4 task 2 note to phase 4 folder
 
 Mon Aug 07 15:15:57 PDT 2023
 saved recent changed to ./data/user1.json
+
+# Phase 4: Task 3
+If I had more time to work on the project, I would refactor the Note, Folder, and User classes to have a bidirectional 
+relationship, so that it has higher coupling and won't require the chain of methods that it currently has. I would also 
+refactor the ThoughtDumpGUI class into more classes since it low cohesion. Finally, I would refactor a lot of classes in
+the windows package since there is a lot of duplicated code. I would also like to add a delete notes and folders button
+and change the appearance of the UI. 
