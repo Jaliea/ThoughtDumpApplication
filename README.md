@@ -1,5 +1,8 @@
 # Thought Dump Application
 
+## NOTE: this project doesn't have the UI I have designed for it. 
+### To see the intended UI, [click here](https://www.figma.com/proto/xT1n7AXV7rnPoaY95ttUDV/ThoughtDump?type=design&node-id=2-8&t=VDqcUf70JjaD9cvO-0&scaling=scale-down&page-id=0%3A1)
+
 ### What does this application do?
 
 **This application is designed to be a place where you can "thought dump"**,
